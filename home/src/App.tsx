@@ -1,14 +1,19 @@
 import * as React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { AppContainer } from "./App.css";
 import { Header } from "./components/Header/Header";
 import { Content } from "./components/Content/ContentContainer";
+import { GlobalContextProvider } from "shared/GlobalContextProvider";
 import "./index.css";
 
 const App = () => (
-  <AppContainer>
-    <Header></Header>
-    <Content />
-  </AppContainer>
+  <GlobalContextProvider>
+    <AppContainer>
+      <Header></Header>
+      <Content />
+    </AppContainer>
+  </GlobalContextProvider>
 );
-ReactDOM.render(<App />, document.getElementById("app"));
+const container = document.getElementById("app");
+const root = ReactDOM.createRoot(container);
+root.render(<App/>);

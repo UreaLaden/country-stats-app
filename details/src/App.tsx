@@ -1,17 +1,23 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import Card from "./components/Card";
+import {GlobalContextProvider,GlobalContext} from "shared/GlobalContextProvider";
 
 const App = () => (
-  <div>
-    <Card>Country 1 - Details</Card>
-    <Card>Country 2 - Details</Card>
-    <Card>Country 3 - Details</Card>
-    <Card>Country 4 - Details</Card>
-    <Card>Country 5 - Details</Card>
-    <Card>Country 6 - Details</Card>
-  </div>
+  <GlobalContextProvider>
+    <div>
+      <Card
+        name={"Bahamas"}
+        population ={393248}
+        flag={"https://flagcdn.com/bs.svg"}
+        region ={"Americas"}
+        capital={"Nassau"}
+      />
+    </div>
+  </GlobalContextProvider>
 );
-ReactDOM.render(<App />, document.getElementById("app"));
+
+const container = document.getElementById("app");
+const root = ReactDOM.createRoot(container);
+root.render(<App />);

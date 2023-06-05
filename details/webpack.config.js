@@ -43,7 +43,9 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "details",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        shared:'shared@http://localhost:3000/remoteEntry.js',        
+      },
       exposes: {
         "./Card":"./src/components/Card.tsx"
       },

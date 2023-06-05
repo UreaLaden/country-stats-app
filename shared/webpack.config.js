@@ -43,8 +43,12 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "shared",
       filename: "remoteEntry.js",
-      remotes: {},
-      exposes: {},
+      remotes: {
+      },
+      exposes: {
+        './GlobalContextProvider':'./src/store/global-context.tsx',
+        './CountryTypes': './src/utils/types.ts'
+      },
       shared: {
         ...deps,
         react: {
