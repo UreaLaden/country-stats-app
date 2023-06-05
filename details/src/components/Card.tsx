@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyledCardContainer } from "./Card.css";
+import { StyledCardContainer, StyledImage } from "./Card.css";
 import { GlobalContext } from "shared/GlobalContextProvider";
 import { Country } from "shared/CountryTypes";
 
@@ -15,7 +15,7 @@ const Card = (props: CountryCardProps) => {
   const context = React.useContext(GlobalContext);
   return (
     <StyledCardContainer>
-      <img src={props.flag} />
+      <StyledImage src={props.flag} alt={props.name} />
       <h1>{props.name}</h1>
       <div>
         <div>Population: {props.population}</div>
