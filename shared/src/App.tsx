@@ -11,26 +11,27 @@ const App = () => {
   const [error, setFetchError] = React.useState<ApiError | null>();
 
   React.useEffect(() => {
-    countryApiClient.getCountriesByRegion("Asia").then((data) => {
-      if (Array.isArray(data)) {
-        setCountries([...data]);
+    countryApiClient.getCountryByName("Hong Kong").then((data) => {
+      if (isApiError(data)) {
+        setFetchError(error);
+      } else {
+        console.log(data);
+        setCountryData(data);
       }
     });
   }, []);
 
   return (
     <div className="container">
-      {countries.map((data, idx) => {
-        return (
-          <div>
-            <img src={data?.flag.png} />
-            <div>Name: {data?.name.common}</div>
-            <div>Code: {data?.code}</div>
-            <div>Language: {data?.languages.toString()}</div>
-            <div>Population: {data?.population}</div>
-          </div>
-        );
-      })}
+      {countryData && (
+        <div>
+          <img src={countryData?.flag.png} />
+          <div>Name: {countryData?.name.common}</div>
+          <div>Code: {countryData?.code}</div>
+          <div>Language: {countryData?.languages.toString()}</div>
+          <div>Population: {countryData?.population}</div>
+        </div>
+      )}
     </div>
   );
 };

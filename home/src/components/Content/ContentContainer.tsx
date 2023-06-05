@@ -15,11 +15,11 @@ export const Content = () => {
   React.useEffect(() => {
     context.populateCountries("all", false);
     setCountries(context.countries);
-  }, [context.countries]);
+  }, [context.currentCountry]);
 
   return (
     <StyledContainer className={classNames.ContentContainer}>
-      {countries?.map((value: Country) => {
+      {/* {countries?.map((value: Country) => {
         return (
           <Card
             key={value.id}
@@ -30,7 +30,22 @@ export const Content = () => {
             capital={value.capital}
           />
         );
-      })}
+      })} */}
+      {context.currentCountry && (
+        <Card
+          key={context.currentCountry.id}
+          name={context.currentCountry.name.official}
+          population={context.currentCountry.population}
+          flag={context.currentCountry.flag.svg}
+          region={context.currentCountry.region}
+          capital={context.currentCountry.capital}
+        />
+      )}
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
     </StyledContainer>
   );
 };

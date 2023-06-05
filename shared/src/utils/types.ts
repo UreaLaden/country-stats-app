@@ -38,7 +38,8 @@ export interface GlobalContextProps {
   currentCountry?: Country;
   theme: Theme;
   setTheme: (themeName: ThemeName) => void;
-  populateCountries: (region:string,byRegion:boolean) => void;
+  populateCountries: (region: string, byRegion: boolean) => void;
+  setCurrentCountry: (country?: Country) => void;
 }
 
 export interface GlobalContextProviderProps {
@@ -72,6 +73,7 @@ export const Themes: Record<string, Theme> = {
 export type ApiError = {
   message: string;
   isError: true;
+  error:Object
 };
 
 export type ApiResponse = {

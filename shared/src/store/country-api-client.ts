@@ -32,6 +32,7 @@ class ApiClient {
       const response = await fetch(url, {
         headers: {
           "Content-type": "application/json",
+          "Access-Control-Allow-Origin":"*"
         },
       });
       const data: ApiResponse = await response.json();
@@ -51,6 +52,7 @@ class ApiClient {
       const response = await fetch(url, {
         headers: {
           "Content-type": "application/json",
+          "Access-Control-Allow-Origin":"*"
         },
       });
       const data: ApiResponse = await response.json();
@@ -59,6 +61,7 @@ class ApiClient {
       console.error(error);
       return {
         message: "An error ocurred while fetching the data",
+        error:error
       } as ApiError;
     }
   }
@@ -70,6 +73,7 @@ class ApiClient {
       const response = await fetch(url, {
         headers: {
           "Content-type": "application/json",
+          "Access-Control-Allow-Origin":"*"
         },
       });
       let result:ApiResponse[] = await response.json();
@@ -91,6 +95,7 @@ class ApiClient {
       const response = await fetch(url, {
         headers: {
           "Content-type": "application/json",
+          "Access-Control-Allow-Origin":"*"
         },
       });
       let result:ApiResponse[] = await response.json();
@@ -105,9 +110,9 @@ class ApiClient {
     }
   }
 
-  private processCountryResponse(data: ApiResponse): Country {
-    
-    let country: Country = {
+  private processCountryResponse(response: ApiResponse): Country {
+    const data = Object.keys(response).length === 1 ? response['0'] : response;
+    const country: Country = {
       id: data.ccn3,
       code: data.cca3.toLowerCase(),
       name: data.name,
