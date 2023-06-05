@@ -9,7 +9,7 @@ import "./index.css";
 const App = () => (
   <GlobalContextProvider>
     <AppContainer>
-      <Header></Header>
+      <Header />
       <Content />
     </AppContainer>
   </GlobalContextProvider>

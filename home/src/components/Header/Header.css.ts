@@ -5,4 +5,7 @@ export const StyledHeader = styled.div`
     border-radius:4px;
     border: 1px solid red;
     background-color:#875C74;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 `;

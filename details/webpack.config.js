@@ -10,7 +10,7 @@ module.exports = (_, argv) => ({
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
-
+  devtool: "source-map",
   devServer: {
     port: 9001,
     historyApiFallback: true,
@@ -44,10 +44,10 @@ module.exports = (_, argv) => ({
       name: "details",
       filename: "remoteEntry.js",
       remotes: {
-        shared:'shared@http://localhost:3000/remoteEntry.js',        
+        shared: "shared@http://localhost:3000/remoteEntry.js",
       },
       exposes: {
-        "./Card":"./src/components/Card.tsx"
+        "./Card": "./src/components/Card.tsx",
       },
       shared: {
         ...deps,

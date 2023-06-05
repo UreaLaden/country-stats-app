@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledCardContainer = styled.div`
 height:100%;
 width:100%;
-border:1px solid green;
+border-radius:5px;
 `;
 
 export const StyledImage = styled.img`

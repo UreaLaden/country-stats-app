@@ -10,7 +10,7 @@ module.exports = (_, argv) => ({
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
-
+  devtool:'source-map',
   devServer: {
     port: 3000,
     historyApiFallback: true,
