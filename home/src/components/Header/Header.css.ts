@@ -1,21 +1,51 @@
-import { mergeStyleSets } from '@fluentui/react';
-import styled from 'styled-components';
+import { mergeStyleSets } from "@fluentui/react";
+import styled from "styled-components";
 
 export const StyledHeader = styled.div`
+    display:flex;
     height:20%;
     border-radius:4px;
-    border: 1px solid red;
-    background-color:#875C74;
-    display:flex;
+    background-color: ${(props) => props.theme.background_secondary};
+    color: ${(props) => props.theme.foreground}
+    transition:background-color .3s ease, color .3s ease;
+    flex-direction:row;
+    flex-wrap:wrap;
     justify-content:space-between;
     align-items:center;
+    padding:3%;
 `;
 
 export const styles = mergeStyleSets({
-    toggleContainer:{
-
+  toggleContainer: {
+    ":hover": {
+      cursor: "pointer",
     },
-    headerText:{},
-    icon:{},
-    label:{}
-})
+    display: "flex",
+  },
+  headerText: {},
+  iconLight: {
+    "svg": {
+      height: "24px",
+      "path": {
+        fill: "#2B3844",
+        transition:'fill .3s ease',
+      },
+    },
+  },
+  label: {},
+  iconDark: {
+    "svg": {
+      height: "24px",
+      "path": {
+        fill:"#FFFFFF",
+        transition:'fill .3s ease',
+      },
+    },
+  },
+  searchContainer:{
+    width:"100%",
+    display:'flex',
+    flexBasis:"100%",
+    justifyContent:"space-between"
+  }
+});

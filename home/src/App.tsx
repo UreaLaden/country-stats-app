@@ -1,23 +1,22 @@
 import * as React from "react";
 import ReactDOM from "react-dom/client";
-import { AppContainer } from "./App.css";
+import { AppContainer } from "./components/AppParent/App.css";
 import { Header } from "./components/Header/Header";
 import { Content } from "./components/Content/ContentContainer";
 import { GlobalContextProvider } from "shared/GlobalContextProvider";
 import "./index.css";
-import { registerIcons } from "@fluentui/react";
+import { registerIcons, initializeIcons } from "@fluentui/react";
 import { svgIcons } from "./utils/SVGIcons";
+import AppContainerParent from "./components/AppParent/AppContainerParent";
 
-registerIcons(svgIcons)
+initializeIcons();
+registerIcons(svgIcons);
 
 const App = () => (
   <GlobalContextProvider>
-    <AppContainer>
-      <Header />
-      <Content />
-    </AppContainer>
+    <AppContainerParent />
   </GlobalContextProvider>
 );
 const container = document.getElementById("app");
 const root = ReactDOM.createRoot(container);
-root.render(<App/>);
+root.render(<App />);

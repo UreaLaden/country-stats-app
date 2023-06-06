@@ -9,12 +9,16 @@ export interface CountryCardProps {
   flag: string;
   region: string;
   capital: string;
+  theme: {
+    foreground: string;
+    background: string;
+    background_secondary: string;
+  };
 }
 
 const Card = (props: CountryCardProps) => {
-  const context = React.useContext(GlobalContext);
   return (
-    <StyledCardContainer className={"card-container"}>
+    <StyledCardContainer className={"card-container"} theme={props.theme}>
       <StyledImage imageSource={props.flag} />
       <div>
         <div>{props.name}</div>

@@ -57,16 +57,26 @@ export type Theme = {
   background_secondary: string;
 };
 
+export const enum Colors{
+  WHITE = "#FFFFFF",
+  WHITE_OFF = "#F2F2F2",
+  GRAY_DARK = "#2B3844",
+  GRAY_LIGHT = "#808080",
+  GRAY_STROKE = "#979797",
+  GRAY_VERYDARK = "#111517",
+  GRAY_MAINBG = "#202C36"
+}
+
 export const Themes: Record<string, Theme> = {
   LIGHT: {
-    foreground: "#2D3436",
-    background: "#DFE6E9",
-    background_secondary: "#FFFFFF",
+    foreground: Colors.GRAY_VERYDARK,
+    background: Colors.WHITE_OFF,
+    background_secondary: Colors.WHITE,
   },
   DARK: {
-    foreground: "#DFE6E9",
-    background: "#2D3436",
-    background_secondary: "#636E72",
+    foreground: Colors.WHITE,
+    background: Colors.GRAY_MAINBG,
+    background_secondary: Colors.GRAY_DARK,
   },
 };
 

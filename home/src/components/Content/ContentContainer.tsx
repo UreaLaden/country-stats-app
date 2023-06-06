@@ -19,7 +19,7 @@ export const Content = () => {
 
   return (
     <StyledContainer className={classNames.ContentContainer}>
-      {countries?.map((value: Country) => {
+      {countries?.map((value: Country, index: number) => {
         return (
           <Card
             key={value.id}
@@ -28,6 +28,7 @@ export const Content = () => {
             flag={value.flag.svg}
             region={value.region}
             capital={value.capital}
+            theme={context.theme}
           />
         );
       })}
