@@ -116,7 +116,7 @@ class ApiClient {
       id: data.ccn3,
       code: data.cca3.toLowerCase(),
       name: data.name,
-      population: data.population,
+      population: data.population.toLocaleString(),
       region: data.region,
       subregion: data.subregion,
       capital: data.capital,

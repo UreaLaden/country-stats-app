@@ -1,3 +1,4 @@
+import { mergeStyleSets } from '@fluentui/react';
 import styled from 'styled-components';
 
 export const StyledHeader = styled.div`
@@ -9,3 +10,12 @@ export const StyledHeader = styled.div`
     justify-content:space-between;
     align-items:center;
 `;
+
+export const styles = mergeStyleSets({
+    toggleContainer:{
+
+    },
+    headerText:{},
+    icon:{},
+    label:{}
+})

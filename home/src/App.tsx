@@ -5,6 +5,10 @@ import { Header } from "./components/Header/Header";
 import { Content } from "./components/Content/ContentContainer";
 import { GlobalContextProvider } from "shared/GlobalContextProvider";
 import "./index.css";
+import { registerIcons } from "@fluentui/react";
+import { svgIcons } from "./utils/SVGIcons";
+
+registerIcons(svgIcons)
 
 const App = () => (
   <GlobalContextProvider>
