@@ -1,4 +1,4 @@
-import { mergeStyleSets } from "@fluentui/react";
+import { ISearchBoxStyles, mergeStyleSets } from "@fluentui/react";
 import styled from "styled-components";
 
 export const StyledHeader = styled.div`
@@ -12,7 +12,7 @@ export const StyledHeader = styled.div`
     flex-wrap:wrap;
     justify-content:space-between;
     align-items:center;
-    padding:3%;
+    padding:2% 3%;
 `;
 
 export const styles = mergeStyleSets({
@@ -24,28 +24,29 @@ export const styles = mergeStyleSets({
   },
   headerText: {},
   iconLight: {
-    "svg": {
+    svg: {
       height: "24px",
-      "path": {
+      path: {
         fill: "#2B3844",
-        transition:'fill .3s ease',
+        transition: "fill .3s ease",
       },
     },
   },
   label: {},
   iconDark: {
-    "svg": {
+    svg: {
       height: "24px",
-      "path": {
-        fill:"#FFFFFF",
-        transition:'fill .3s ease',
+      path: {
+        fill: "#FFFFFF",
+        transition: "fill .3s ease",
       },
     },
   },
-  searchContainer:{
-    width:"100%",
-    display:'flex',
-    flexBasis:"100%",
-    justifyContent:"space-between"
-  }
+  searchContainer: {
+    width: "100%",
+    display: "flex",
+    flexBasis: "100%",
+    justifyContent: "space-between",
+  },
 });
+

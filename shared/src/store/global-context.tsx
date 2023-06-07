@@ -14,6 +14,7 @@ export const GlobalContext = React.createContext<GlobalContextProps>({
   countries: [],
   currentCountry: undefined,
   theme: Themes.LIGHT,
+  regions:[],
   setTheme: () => {},
   populateCountries: () => {},
   setCurrentCountry: () => {}
@@ -23,6 +24,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   props: GlobalContextProviderProps
 ) => {
   const [countries, setCountries] = React.useState<Country[]>([]);
+  const [regions,setRegions] = React.useState<string[]>([]);
   const [currentCountry, setCurrentCountry] = React.useState<
     Country | undefined
   >(undefined);
@@ -32,6 +34,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   React.useEffect(() => {
     if(!currentCountry){
         setCurrentCountryHandler(countries[0]);
+        setRegionsHandler();
     }
   },[countries])
 
@@ -55,6 +58,11 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     }
   };
 
+  const setRegionsHandler = () => {
+    const regions = countries.map((country) => country.region);
+    setRegions([...new Set(regions)]);
+  }
+
   const setCurrentCountryHandler = (country?:Country) => {
     if(country){
         setCurrentCountry(country);
@@ -67,6 +75,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     countries: countries,
     currentCountry: currentCountry,
     theme: theme,
+    regions:regions,
     setTheme: setThemeHandler,
     populateCountries: setCountriesHandler,
     setCurrentCountry:setCurrentCountryHandler

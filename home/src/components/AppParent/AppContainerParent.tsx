@@ -10,9 +10,7 @@ import { classNames } from "../../utils/constants";
 
 export const AppContainerParent = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
-  React.useEffect(() => {
-    console.log(context.theme);
-  },[context.theme])
+ 
   return (
     <AppContainer theme={context.theme} className={classNames.AppContainerParent}>
       <Header />

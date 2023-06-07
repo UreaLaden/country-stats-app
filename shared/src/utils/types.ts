@@ -37,6 +37,7 @@ export interface GlobalContextProps {
   countries: Country[];
   currentCountry?: Country;
   theme: Theme;
+  regions: string[];
   setTheme: (themeName: ThemeName) => void;
   populateCountries: (region: string, byRegion: boolean) => void;
   setCurrentCountry: (country?: Country) => void;
@@ -52,28 +53,31 @@ export enum ThemeName {
 }
 
 export type Theme = {
+  name: string;
   foreground: string;
   background: string;
   background_secondary: string;
 };
 
-export const enum Colors{
+export const enum Colors {
   WHITE = "#FFFFFF",
   WHITE_OFF = "#F2F2F2",
   GRAY_DARK = "#2B3844",
   GRAY_LIGHT = "#808080",
   GRAY_STROKE = "#979797",
   GRAY_VERYDARK = "#111517",
-  GRAY_MAINBG = "#202C36"
+  GRAY_MAINBG = "#202C36",
 }
 
 export const Themes: Record<string, Theme> = {
   LIGHT: {
+    name: "LIGHT",
     foreground: Colors.GRAY_VERYDARK,
     background: Colors.WHITE_OFF,
     background_secondary: Colors.WHITE,
   },
   DARK: {
+    name: "DARK",
     foreground: Colors.WHITE,
     background: Colors.GRAY_MAINBG,
     background_secondary: Colors.GRAY_DARK,
@@ -83,7 +87,7 @@ export const Themes: Record<string, Theme> = {
 export type ApiError = {
   message: string;
   isError: true;
-  error:Object
+  error: Object;
 };
 
 export type ApiResponse = {

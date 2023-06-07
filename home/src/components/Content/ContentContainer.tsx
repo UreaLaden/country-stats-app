@@ -7,6 +7,7 @@ import {
   GlobalContextProps,
 } from "shared/GlobalContextProvider";
 import { Country } from "shared/CountryTypes";
+import { SearchBar } from "../Search/SearchBar";
 
 export const Content = () => {
   const [countries, setCountries] = React.useState<Country[]>();
@@ -18,30 +19,23 @@ export const Content = () => {
   }, [context.currentCountry]);
 
   return (
-    <StyledContainer className={classNames.ContentContainer}>
-      {countries?.map((value: Country, index: number) => {
-        return (
-          <Card
-            key={value.id}
-            name={value.name.official}
-            population={value.population}
-            flag={value.flag.svg}
-            region={value.region}
-            capital={value.capital}
-            theme={context.theme}
-          />
-        );
-      })}
-      {/* {context.currentCountry && (
-        <Card
-          key={context.currentCountry.id}
-          name={context.currentCountry.name.official}
-          population={context.currentCountry.population}
-          flag={context.currentCountry.flag.svg}
-          region={context.currentCountry.region}
-          capital={context.currentCountry.capital}
-        />
-      )} */}
-    </StyledContainer>
+    <>
+      <SearchBar />
+      <StyledContainer className={classNames.ContentContainer}>
+        {countries?.map((value: Country, index: number) => {
+          return (
+            <Card
+              key={value.id}
+              name={value.name.official}
+              population={value.population}
+              flag={value.flag.svg}
+              region={value.region}
+              capital={value.capital}
+              theme={context.theme}
+            />
+          );
+        })}
+      </StyledContainer>
+    </>
   );
 };
