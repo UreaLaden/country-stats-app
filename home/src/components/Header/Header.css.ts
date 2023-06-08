@@ -13,6 +13,7 @@ export const StyledHeader = styled.div`
     justify-content:space-between;
     align-items:center;
     padding:2% 3%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 `;
 
 export const styles = mergeStyleSets({
@@ -22,7 +23,10 @@ export const styles = mergeStyleSets({
     },
     display: "flex",
   },
-  headerText: {},
+  headerText: {
+    fontWeight:800,
+    fontSize:'1.2rem'
+  },
   iconLight: {
     svg: {
       height: "24px",
@@ -32,7 +36,9 @@ export const styles = mergeStyleSets({
       },
     },
   },
-  label: {},
+  label: {
+    fontWeight:600
+  },
   iconDark: {
     svg: {
       height: "24px",

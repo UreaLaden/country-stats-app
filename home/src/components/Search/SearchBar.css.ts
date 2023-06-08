@@ -10,8 +10,14 @@ export const styles = mergeStyleSets({
     display: "flex",
     flexBasis: "100%",
     justifyContent: "space-between",
-    padding:"5% 0"
+    padding:"5% 5%",
+    position:'relative'
   },
+  errorContainer:{
+    position:'absolute',
+    bottom:35,
+    color:'red'    
+  }
 });
 
 export const searchBoxStylesLight: Partial<ISearchBoxStyles> = {
@@ -26,7 +32,7 @@ export const searchBoxStylesLight: Partial<ISearchBoxStyles> = {
     border: "none",
     width: "40%",
     height: "56px",
-    "box-shadow": " 0 0 5px rgba(0,0,0,0.1)",
+    "box-shadow": " 0 0 15px rgba(0,0,0,0.1)",
     input: {
       "::placeholder": {
         color: "#2B3844",
@@ -47,7 +53,7 @@ export const searchBoxStylesDark: Partial<ISearchBoxStyles> = {
     width: "40%",
     height: "56px",
     border: "none",
-    "box-shadow": " 0 0 5px rgba(0,0,0,0.1)",
+    "box-shadow": " 0 0 15px rgba(0,0,0,0.1)",
     input: {
       "::placeholder": {
         color: "#FFFFFF",

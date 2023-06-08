@@ -15,8 +15,12 @@ export const Content = () => {
 
   React.useEffect(() => {
     context.populateCountries("all", false);
-    setCountries(context.countries);
-  }, [context.currentCountry]);
+    setCountries(() =>
+      context.filteredCountries.length > 0
+        ? context.filteredCountries
+        : context.countries
+    );
+  }, [context.currentCountry, context.filteredCountries]);
 
   return (
     <>
@@ -26,7 +30,7 @@ export const Content = () => {
           return (
             <Card
               key={value.id}
-              name={value.name.official}
+              name={value.name.common}
               population={value.population}
               flag={value.flag.svg}
               region={value.region}

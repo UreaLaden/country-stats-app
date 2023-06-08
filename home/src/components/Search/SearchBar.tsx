@@ -12,9 +12,49 @@ import {
   GlobalContext,
   GlobalContextProps,
 } from "shared/GlobalContextProvider";
+import { Country } from "shared/CountryTypes";
+import { Trie } from "../../utils/TrieSearch";
 
 export const SearchBar = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
+  const [trie, setTrie] = React.useState<Trie>();
+  const [searchCountries, setSearchCountries] = React.useState();
+
+  React.useEffect(() => {
+    setTrie(new Trie());
+  }, []);
+
+  React.useEffect(() => {
+    trie?.compileNodes(context.countryNames);
+  }, [context.countryNames]);
+
+  const SearchInputHandler = (newValue: string) => {
+    if (trie?.search(newValue)) {
+      context.findCountryByName(newValue);
+      console.log("SearchBox onSearch fired: " + newValue);
+    } else {
+      console.log(`Country with name: ${newValue} doesn't exist`);
+      console.log(trie);
+    }
+  };
+
+  const getRelativeCountries = (value: string): string[] => {
+    return trie!.selectCountriesWithPrefix(value, trie!);
+  };
+
+  const OnSearchInputChanged = (_: any, newValue?: string) => {
+    //Should filter the currently displayed cards
+    if (newValue) {
+      const relatedCountries = getRelativeCountries(newValue);
+      const filteredCountries: Country[] = relatedCountries.map((value) =>
+        context.countries.find(
+          (item: Country) => item.name.common.toLowerCase() === value
+        )
+      );
+      context.delay(3000);
+      context.setFilteredCountries(filteredCountries);
+    }
+  };
 
   const searchBoxClass = React.useMemo(() => {
     return context.theme.name === ThemeNames.Light
@@ -41,21 +81,21 @@ export const SearchBar = () => {
           console.log("Custom onEscape Called");
         }}
         onClear={(ev) => {
-          console.log("Custom onClear Called");
+          context.setFilteredCountries([]);
         }}
-        onChange={(_, newValue) =>
-          console.log("SearchBox onChange fired: " + newValue)
-        }
-        onSearch={(newValue) =>
-          console.log("SearchBox onSearch fired: " + newValue)
-        }
+        onChange={OnSearchInputChanged}
+        onSearch={SearchInputHandler}
       />
       <Dropdown
         // componentRef={dropdownRef}
         styles={regionFilterClass}
         placeholder="Filter by Region"
         options={dropDownOptions}
+        onChange={(_ev:any,option:any) => context.populateCountries(option.text,true)}
       />
+      <div className={styles.errorContainer}>
+        Sorry couldn't find any countries with that name :(
+      </div>
     </div>
   );
 };

@@ -24,6 +24,10 @@ export const Header = () => {
     );
   }, []);
 
+  const mode = React.useMemo(() => {
+    return themeName === ThemeNames.Light ? "Light" : "Dark"
+  },[themeName]);
+
   const iconClass = React.useMemo(() => {
     return themeName === ThemeNames.Light ? styles.iconLight : styles.iconDark;
   }, [themeName]);
@@ -35,7 +39,7 @@ export const Header = () => {
       <div className={styles.headerText}>Where in the world?</div>
       <div className={styles.toggleContainer} onClick={onThemeToggleClicked}>
         <Icon className={iconClass} iconName={"dark-mode"} />
-        <span className={styles.label}>Dark Mode</span>
+        <span className={styles.label}>{mode} Mode</span>
       </div>
     </StyledHeader>
   );

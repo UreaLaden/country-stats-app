@@ -6,6 +6,7 @@ import {
   Theme,
   ThemeName,
   Themes,
+  isApiError,
 } from "../utils/types";
 import countryApiClient from "./country-api-client";
 export * as types from "../utils/types";
@@ -15,9 +16,14 @@ export const GlobalContext = React.createContext<GlobalContextProps>({
   currentCountry: undefined,
   theme: Themes.LIGHT,
   regions:[],
+  countryNames:[],
+  filteredCountries:[],
+  delay: () => {},
+  setFilteredCountries: () => {},
   setTheme: () => {},
   populateCountries: () => {},
-  setCurrentCountry: () => {}
+  setCurrentCountry: () => {},
+  findCountryByName: () => {},
 });
 
 export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
@@ -29,18 +35,24 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     Country | undefined
   >(undefined);
   const [theme, setActiveTheme] = React.useState<Theme>(Themes.LIGHT);
-
+  const [countryNames,setCountryNames] = React.useState<string[]>([]);
+  const [filteredCountries,setFilteredCountries] = React.useState<Country[]>([]);
 
   React.useEffect(() => {
     if(!currentCountry){
         setCurrentCountryHandler(countries[0]);
         setRegionsHandler();
+        setCountryNamesHandler();
     }
   },[countries])
 
   const setThemeHandler = (themeName: ThemeName) => {
     setActiveTheme(Themes[themeName] as Theme);
   };
+
+  const delay = (ms:number) =>{
+    return new Promise(resolve => setTimeout(resolve,ms));
+}
 
   const setCountriesHandler = (region = "", byRegion = true) => {
     if (byRegion === false) {
@@ -52,11 +64,29 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     } else {
       countryApiClient.getCountriesByRegion(region).then((data) => {
         if (Array.isArray(data)) {
-          setCountries(data);
+          setFilteredCountries(data);
         }
       });
     }
   };
+
+  const setFilteredCountriesHandler = (countries:Country[]) => {
+    setFilteredCountries(countries);
+  }
+
+  const findCountryByName = (name:string) => {
+    countryApiClient.getCountryByName(name).then((data) => {
+      if(isApiError(data)){
+        //Do something
+      }else{
+        setCountries([data])
+      }
+    })
+  }
+
+  const setCountryNamesHandler = () => {
+    setCountryNames(countries.map(value => value.name.common))
+  }
 
   const setRegionsHandler = () => {
     const regions = countries.map((country) => country.region);
@@ -76,6 +106,11 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     currentCountry: currentCountry,
     theme: theme,
     regions:regions,
+    countryNames:countryNames,
+    filteredCountries:filteredCountries,
+    delay:delay,
+    setFilteredCountries:setFilteredCountriesHandler,
+    findCountryByName:findCountryByName,
     setTheme: setThemeHandler,
     populateCountries: setCountriesHandler,
     setCurrentCountry:setCurrentCountryHandler
