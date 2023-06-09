@@ -8,6 +8,7 @@ import {
 } from "./Card.css";
 import { GlobalContext } from "shared/GlobalContextProvider";
 import { Country } from "shared/CountryTypes";
+import { Link } from "react-router-dom";
 
 export interface CountryCardProps {
   name: string;
@@ -20,12 +21,15 @@ export interface CountryCardProps {
     background: string;
     background_secondary: string;
   };
+  onCardClicked: () => void;
 }
 
 const Card = (props: CountryCardProps) => {
   return (
     <StyledCardContainer className={"card-container"} theme={props.theme}>
-      <StyledImage imageSource={props.flag} />
+      <Link to="/details" onClick={() => props.onCardClicked()}>
+        <StyledImage imageSource={props.flag} />
+      </Link>
       <StyledCardDetailsContainer>
         <StyledCountryHeader>{props.name}</StyledCountryHeader>
         <div>

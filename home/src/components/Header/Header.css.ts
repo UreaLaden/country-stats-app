@@ -25,7 +25,11 @@ export const styles = mergeStyleSets({
   },
   headerText: {
     fontWeight:800,
-    fontSize:'1.2rem'
+    fontSize:'1.2rem',
+  },
+  headerLink:{
+    textDecoration:'none',
+    color:'inherit'
   },
   iconLight: {
     svg: {

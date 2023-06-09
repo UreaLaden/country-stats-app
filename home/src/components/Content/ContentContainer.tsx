@@ -36,6 +36,7 @@ export const Content = () => {
               region={value.region}
               capital={value.capital}
               theme={context.theme}
+              onCardClicked={() => context.setCurrentCountry(value)}
             />
           );
         })}

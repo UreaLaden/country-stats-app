@@ -19,6 +19,7 @@ export const SearchBar = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
   const [trie, setTrie] = React.useState<Trie>();
   const [searchCountries, setSearchCountries] = React.useState();
+  const [enableError, setEnableError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     setTrie(new Trie());
@@ -33,8 +34,10 @@ export const SearchBar = () => {
       context.findCountryByName(newValue);
       console.log("SearchBox onSearch fired: " + newValue);
     } else {
-      console.log(`Country with name: ${newValue} doesn't exist`);
-      console.log(trie);
+      setEnableError(true);
+      setTimeout(() => {
+        setEnableError(false);
+      }, 2500);
     }
   };
 
@@ -91,10 +94,16 @@ export const SearchBar = () => {
         styles={regionFilterClass}
         placeholder="Filter by Region"
         options={dropDownOptions}
-        onChange={(_ev:any,option:any) => context.populateCountries(option.text,true)}
+        onChange={(_ev: any, option: any) =>
+          context.populateCountries(option.text, true)
+        }
       />
-      <div className={styles.errorContainer}>
-        Sorry couldn't find any countries with that name :(
+      <div
+        className={`${styles.errorContainer} ${
+          enableError ? styles.visible : styles.invisible
+        }`}
+      >
+        Sorry I couldn't find any country with that name :(
       </div>
     </div>
   );

@@ -61,6 +61,10 @@ module.exports = (_, argv) => ({
         "styled-components":{
           singleton:true,
           requiredVersion:deps["styled-components"]
+        },
+        "react-router-dom":{
+          singleton:true,
+          requiredVersion:deps["react-router-dom"]
         }
       },
     }),

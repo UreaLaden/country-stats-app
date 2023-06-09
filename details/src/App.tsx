@@ -4,7 +4,7 @@ import "./index.css";
 import Card from "./components/Card";
 import {GlobalContextProvider,GlobalContext} from "shared/GlobalContextProvider";
 
-const App = () => (
+const App = () => (  
   <GlobalContextProvider>
     <div>
       <Card

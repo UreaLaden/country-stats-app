@@ -16,7 +16,15 @@ export const styles = mergeStyleSets({
   errorContainer:{
     position:'absolute',
     bottom:35,
-    color:'red'    
+    color:'red',
+    opacity:0,
+    transition:'opacity 250ms ease',
+  },
+  visible:{
+    opacity:1
+  },
+  invisible:{
+    opacity:0
   }
 });
 
@@ -37,6 +45,7 @@ export const searchBoxStylesLight: Partial<ISearchBoxStyles> = {
       "::placeholder": {
         color: "#2B3844",
       },
+      
     },
   },
 };
@@ -58,6 +67,7 @@ export const searchBoxStylesDark: Partial<ISearchBoxStyles> = {
       "::placeholder": {
         color: "#FFFFFF",
       },
+      color:"#FFFFFF"
     },
   },
 };
