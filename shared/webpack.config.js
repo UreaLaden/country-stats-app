@@ -10,7 +10,7 @@ module.exports = (_, argv) => ({
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
-
+  devtool:'source-map',
   devServer: {
     port: 3000,
     historyApiFallback: true,
@@ -59,6 +59,10 @@ module.exports = (_, argv) => ({
           singleton: true,
           requiredVersion: deps["react-dom"],
         },
+        "react-router-dom":{
+          singleton:true,
+          requiredVersion:deps["react-router-dom"]
+        }
       },
     }),
     new HtmlWebPackPlugin({

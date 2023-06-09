@@ -10,7 +10,7 @@ module.exports = (_, argv) => ({
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
-
+  devtool: "source-map",
   devServer: {
     port: 9000,
     historyApiFallback: true,
@@ -44,8 +44,8 @@ module.exports = (_, argv) => ({
       name: "home",
       filename: "remoteEntry.js",
       remotes: {
-        details:"details@http://localhost:9001/remoteEntry.js",
-        shared:'shared@http://localhost:3000/remoteEntry.js',
+        details: "details@http://localhost:9001/remoteEntry.js",
+        shared: "shared@http://localhost:3000/remoteEntry.js",
       },
       exposes: {},
       shared: {
@@ -58,6 +58,14 @@ module.exports = (_, argv) => ({
           singleton: true,
           requiredVersion: deps["react-dom"],
         },
+        "styled-components":{
+          singleton:true,
+          requiredVersion:deps["styled-components"]
+        },
+        "react-router-dom":{
+          singleton:true,
+          requiredVersion:deps["react-router-dom"]
+        }
       },
     }),
     new HtmlWebPackPlugin({

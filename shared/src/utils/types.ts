@@ -37,9 +37,15 @@ export interface GlobalContextProps {
   countries: Country[];
   currentCountry?: Country;
   theme: Theme;
+  regions: string[];
+  countryNames: string[];
+  filteredCountries: Country[];
+  delay: (timeout:number) => void;
+  setFilteredCountries: (countries: Country[]) => void;
   setTheme: (themeName: ThemeName) => void;
   populateCountries: (region: string, byRegion: boolean) => void;
   setCurrentCountry: (country?: Country) => void;
+  findCountryByName: (name: string) => void;
 }
 
 export interface GlobalContextProviderProps {
@@ -52,28 +58,41 @@ export enum ThemeName {
 }
 
 export type Theme = {
+  name: string;
   foreground: string;
   background: string;
   background_secondary: string;
 };
 
+export const enum Colors {
+  WHITE = "#FFFFFF",
+  WHITE_OFF = "#F2F2F2",
+  GRAY_DARK = "#2B3844",
+  GRAY_LIGHT = "#808080",
+  GRAY_STROKE = "#979797",
+  GRAY_VERYDARK = "#111517",
+  GRAY_MAINBG = "#202C36",
+}
+
 export const Themes: Record<string, Theme> = {
   LIGHT: {
-    foreground: "#2D3436",
-    background: "#DFE6E9",
-    background_secondary: "#FFFFFF",
+    name: "LIGHT",
+    foreground: Colors.GRAY_VERYDARK,
+    background: Colors.WHITE_OFF,
+    background_secondary: Colors.WHITE,
   },
   DARK: {
-    foreground: "#DFE6E9",
-    background: "#2D3436",
-    background_secondary: "#636E72",
+    name: "DARK",
+    foreground: Colors.WHITE,
+    background: Colors.GRAY_MAINBG,
+    background_secondary: Colors.GRAY_DARK,
   },
 };
 
 export type ApiError = {
   message: string;
   isError: true;
-  error:Object
+  error: Object;
 };
 
 export type ApiResponse = {
