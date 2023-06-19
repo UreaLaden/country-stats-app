@@ -40,6 +40,8 @@ export interface GlobalContextProps {
   regions: string[];
   countryNames: string[];
   filteredCountries: Country[];
+  setState: (state: GlobalContextProps) => void;
+  getState:() => GlobalContextProps | null;
   delay: (timeout:number) => void;
   setFilteredCountries: (countries: Country[]) => void;
   setTheme: (themeName: ThemeName) => void;

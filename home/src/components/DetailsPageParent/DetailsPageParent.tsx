@@ -9,41 +9,66 @@ import { AppContainer } from "../AppParent/App.css";
 import { DetailsContainer, styles } from "./DetailsPageParent.css";
 import { Link } from "react-router-dom";
 import { Country } from "shared/CountryTypes";
+import { loadStateFromStorage } from "../../utils/helpers";
 
 export const DetailsContainerParent = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
   const [country, setCountry] = React.useState<Country>();
+  const [state, setState] = React.useState<GlobalContextProps>(context?.state);
 
   React.useEffect(() => {
-    setCountry(context.currentCountry);
-  }, [context.currentCountry]);
+    const currentState = loadStateFromStorage();
+    setState(currentState);
+    context.setState(currentState);
+    const handleBeforeUnload = (event: any) => {
+      // event.preventDefault();
+
+      const newState = { ...context };
+      console.log(newState);
+      context.setState(newState);
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   const currency = React.useMemo(() => {
-    const key = Object.keys(context.currentCountry.currencies);
+    if (!state) return;
+    console.log(state);
+    const currencyArray = state?.currentCountry.currencies;
+    const key = Object.keys(state!.currentCountry!.currencies); //Why is this not working.......
     const currencies = key.map((value) => {
-      return context.currentCountry.currencies[value]?.name;
-    })
+      return state?.currentCountry?.currencies[value]?.name;
+    });
     return currencies.join(", ");
-  }, [context.currentCountry]);
+  }, [state?.currentCountry]);
 
   const borders = React.useMemo(() => {
-    const names: string[] = context.currentCountry.borders.map(
+    if (!state) return;
+    const names: string[] = state?.currentCountry?.borders.map(
       (value: string) => {
-        return context.countries.find(
+        return state?.countries.find(
           (country: Country) =>
             country.code.toUpperCase() === value.toUpperCase()
         ).name.common;
       }
     );
-    console.log(names)
     return names;
-  }, [context.currentCountry, context.countryNames]);
+  }, [state?.currentCountry, state?.countryNames]);
 
   const languages = React.useMemo(() => {
-    const keys = Object.keys(context.currentCountry.languages);
-    const compiledLanguages = keys.map((value) => context.currentCountry.languages[value])
-    return compiledLanguages.join(', ');
+    if (!state) return;
+    const keys = Object.keys(state?.currentCountry.languages);
+    const compiledLanguages = keys.map(
+      (value) => state?.currentCountry.languages[value]
+    );
+    return compiledLanguages.join(", ");
   }, []);
+
+  const imageUrl = React.useMemo(() => {
+    return state?.currentCountry.flag.svg
+  },[state?.currentCountry])
 
   return (
     <AppContainer
@@ -51,34 +76,46 @@ export const DetailsContainerParent = () => {
       className={classNames.AppContainerParent}
     >
       <Header />
-      <DetailsContainer>
-        <Link to="/">Back</Link>
-        {context.currentCountry && (
-          <>
-            <img
-              src={context.currentCountry.flag.svg}
-              alt={context.currentCountry.name.common}
-            />
-            <div>{context.currentCountry.name.common}</div>
-            <div>
-              <div>Population: {context.currentCountry.population}</div>
-              <div>Region: {context.currentCountry.region}</div>
-              <div>Sub Region: {context.currentCountry.subregion}</div>
-              <div>Capital: {context.currentCountry.capital}</div>
-              <div>
-                Top Level Domain: {context.currentCountry.topLevelDomain}
+      <DetailsContainer className={"details-container"}>
+        <div className={styles.backButtonContainer}>
+          <Link className={styles.backButton} to="/">
+            Back
+          </Link>
+        </div>
+        {
+          /*state?.currentCountry &&*/ <div
+            className={styles.detailsContainerWrapper}
+          >
+            <div className={styles.detailsImageContainer}>
+              <div className={styles.detailsImage} style={{backgroundImage:`url(${imageUrl})`}}>
               </div>
-              <div>Currencies: {currency}</div>
-              <div>Languages: {languages}</div>
-              <div>
+            </div>
+            <div className={styles.innerDetailsContainer}>
+              <div className={styles.detailsHeader}>
+                {state?.currentCountry?.name.common}
+              </div>
+              <div className={styles.contentPrimary}>
+                <div>Population: {state?.currentCountry?.population}</div>
+                <div>Region: {state?.currentCountry?.region}</div>
+                <div>Sub Region: {state?.currentCountry?.subregion}</div>
+                <div>Capital: {state?.currentCountry?.capital}</div>
+              </div>
+              <div className={styles.contentSecondary}>
+                <div>
+                  Top Level Domain: {state?.currentCountry?.topLevelDomain}
+                </div>
+                <div>Currencies: {currency}</div>
+                <div>Languages: {languages}</div>
+              </div>
+              <div className={styles.contentBorder}>
                 Border Countries:{" "}
-                {borders.map((value: string, idx: number) => {
+                {borders?.map((value: string, idx: number) => {
                   return <button key={idx}>{value}</button>;
                 })}
               </div>
             </div>
-          </>
-        )}
+          </div>
+        }
       </DetailsContainer>
     </AppContainer>
   );

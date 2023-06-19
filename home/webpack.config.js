@@ -65,6 +65,10 @@ module.exports = (_, argv) => ({
         "react-router-dom":{
           singleton:true,
           requiredVersion:deps["react-router-dom"]
+        },
+        "pako":{
+          singleton:true,
+          requiredVersion:deps["pako"]
         }
       },
     }),

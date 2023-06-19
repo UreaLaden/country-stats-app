@@ -9,15 +9,19 @@ import {
   isApiError,
 } from "../utils/types";
 import countryApiClient from "./country-api-client";
+import { loadStateFromStorage } from "../utils/helpers";
 export * as types from "../utils/types";
+
 
 export const GlobalContext = React.createContext<GlobalContextProps>({
   countries: [],
   currentCountry: undefined,
   theme: Themes.LIGHT,
-  regions:[],
-  countryNames:[],
-  filteredCountries:[],
+  regions: [],
+  countryNames: [],
+  filteredCountries: [],
+  setState:() => {},
+  getState: () => null,
   delay: () => {},
   setFilteredCountries: () => {},
   setTheme: () => {},
@@ -30,29 +34,45 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   props: GlobalContextProviderProps
 ) => {
   const [countries, setCountries] = React.useState<Country[]>([]);
-  const [regions,setRegions] = React.useState<string[]>([]);
+  const [regions, setRegions] = React.useState<string[]>([]);
   const [currentCountry, setCurrentCountry] = React.useState<
     Country | undefined
   >(undefined);
   const [theme, setActiveTheme] = React.useState<Theme>(Themes.LIGHT);
-  const [countryNames,setCountryNames] = React.useState<string[]>([]);
-  const [filteredCountries,setFilteredCountries] = React.useState<Country[]>([]);
+  const [countryNames, setCountryNames] = React.useState<string[]>([]);
+  const [filteredCountries, setFilteredCountries] = React.useState<Country[]>(
+    []
+  );
+
+  const saveStateToStorage = (state: GlobalContextProps) => {
+    console.log(state);
+    const dataString = JSON.stringify(state);
+
+    sessionStorage.setItem("context", dataString);
+  };
+
+  const updateStateHandler = (newState: GlobalContextProps) => {
+    saveStateToStorage(newState);
+  };
 
   React.useEffect(() => {
-    if(!currentCountry){
-        setCurrentCountryHandler(countries[0]);
-        setRegionsHandler();
-        setCountryNamesHandler();
+    if (!currentCountry) {
+      setCurrentCountryHandler(countries[0]);
+      setRegionsHandler();
+      setCountryNamesHandler();
+      updateStateHandler({...context});
     }
-  },[countries])
+  }, [countries]);
+
+
 
   const setThemeHandler = (themeName: ThemeName) => {
     setActiveTheme(Themes[themeName] as Theme);
   };
 
-  const delay = (ms:number) =>{
-    return new Promise(resolve => setTimeout(resolve,ms));
-}
+  const delay = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
   const setCountriesHandler = (region = "", byRegion = true) => {
     if (byRegion === false) {
@@ -70,51 +90,55 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     }
   };
 
-  const setFilteredCountriesHandler = (countries:Country[]) => {
+  const setFilteredCountriesHandler = (countries: Country[]) => {
     setFilteredCountries(countries);
-  }
+  };
 
-  const findCountryByName = (name:string) => {
+  const findCountryByName = (name: string) => {
     countryApiClient.getCountryByName(name).then((data) => {
-      if(isApiError(data)){
+      if (isApiError(data)) {
         //Do something
-      }else{
-        setCountries([data])
+      } else {
+        setCountries([data]);
       }
-    })
-  }
+    });
+  };
 
   const setCountryNamesHandler = () => {
-    setCountryNames(countries.map(value => value.name.common))
-  }
+    const names = countries.map((value) => value.name.common);
+    setCountryNames(names);
+  };
 
   const setRegionsHandler = () => {
     const regions = countries.map((country) => country.region);
-    setRegions([...new Set(regions)]);
-  }
+    const regionSet = [...new Set(regions)];
+    setRegions(regionSet);
+  };
 
-  const setCurrentCountryHandler = (country?:Country) => {
-    console.log("Updating country to: ",country?.name);
-    if(country){
-        setCurrentCountry(country);
-    }else{
-        setCurrentCountry(countries[0]);
+  const setCurrentCountryHandler = (country?: Country) => {
+    console.log("Updating country to: ", country?.name);
+    if (country) {
+      setCurrentCountry(country);
+    } else {
+      setCurrentCountry(countries[0]);
     }
-  }
+  };
 
   const context: GlobalContextProps = {
     countries: countries,
     currentCountry: currentCountry,
     theme: theme,
-    regions:regions,
-    countryNames:countryNames,
-    filteredCountries:filteredCountries,
-    delay:delay,
-    setFilteredCountries:setFilteredCountriesHandler,
-    findCountryByName:findCountryByName,
+    regions: regions,
+    countryNames: countryNames,
+    filteredCountries: filteredCountries,
+    getState: loadStateFromStorage,
+    setState:updateStateHandler,
+    delay: delay,
+    setFilteredCountries: setFilteredCountriesHandler,
+    findCountryByName: findCountryByName,
     setTheme: setThemeHandler,
     populateCountries: setCountriesHandler,
-    setCurrentCountry:setCurrentCountryHandler
+    setCurrentCountry: setCurrentCountryHandler,
   };
 
   return (

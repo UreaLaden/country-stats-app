@@ -36,7 +36,11 @@ export const Content = () => {
               region={value.region}
               capital={value.capital}
               theme={context.theme}
-              onCardClicked={() => context.setCurrentCountry(value)}
+              onCardClicked={() => {
+                context.setCurrentCountry(value);
+                const newState = {...context,currentCountry:value}
+                context.setState(newState);
+              }}
             />
           );
         })}
