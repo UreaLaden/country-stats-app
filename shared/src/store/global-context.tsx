@@ -12,7 +12,6 @@ import countryApiClient from "./country-api-client";
 import { loadStateFromStorage } from "../utils/helpers";
 export * as types from "../utils/types";
 
-
 export const GlobalContext = React.createContext<GlobalContextProps>({
   countries: [],
   currentCountry: undefined,
@@ -20,7 +19,7 @@ export const GlobalContext = React.createContext<GlobalContextProps>({
   regions: [],
   countryNames: [],
   filteredCountries: [],
-  setState:() => {},
+  setState: () => {},
   getState: () => null,
   delay: () => {},
   setFilteredCountries: () => {},
@@ -28,6 +27,7 @@ export const GlobalContext = React.createContext<GlobalContextProps>({
   populateCountries: () => {},
   setCurrentCountry: () => {},
   findCountryByName: () => {},
+  fetchCountry: () => {},
 });
 
 export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
@@ -45,7 +45,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   );
 
   const saveStateToStorage = (state: GlobalContextProps) => {
-    console.log(state);
     const dataString = JSON.stringify(state);
 
     sessionStorage.setItem("context", dataString);
@@ -55,19 +54,26 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     saveStateToStorage(newState);
   };
 
+  const fetchCountryHandler = async (name: string) => {
+    const country = await countryApiClient.getCountryByName(name);
+    if (!isApiError(country)) {
+      setCurrentCountry(country);
+      updateStateHandler({...context});
+    }
+  };
+
   React.useEffect(() => {
     if (!currentCountry) {
       setCurrentCountryHandler(countries[0]);
       setRegionsHandler();
       setCountryNamesHandler();
-      updateStateHandler({...context});
+      updateStateHandler({ ...context });
     }
   }, [countries]);
 
-
-
   const setThemeHandler = (themeName: ThemeName) => {
     setActiveTheme(Themes[themeName] as Theme);
+    updateStateHandler({ ...context });
   };
 
   const delay = (ms: number) => {
@@ -132,13 +138,14 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     countryNames: countryNames,
     filteredCountries: filteredCountries,
     getState: loadStateFromStorage,
-    setState:updateStateHandler,
+    setState: updateStateHandler,
     delay: delay,
     setFilteredCountries: setFilteredCountriesHandler,
     findCountryByName: findCountryByName,
     setTheme: setThemeHandler,
     populateCountries: setCountriesHandler,
     setCurrentCountry: setCurrentCountryHandler,
+    fetchCountry:fetchCountryHandler
   };
 
   return (

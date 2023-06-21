@@ -37,7 +37,7 @@ export const Content = () => {
               capital={value.capital}
               theme={context.theme}
               onCardClicked={() => {
-                context.setCurrentCountry(value);
+                context.fetchCountry(value.name.common);
                 const newState = {...context,currentCountry:value}
                 context.setState(newState);
               }}

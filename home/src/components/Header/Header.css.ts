@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const StyledHeader = styled.div`
     display:flex;
-    height:10vh;
+    height:6vh;
     width:100vw;
     z-index:1000;
     position:fixed;
