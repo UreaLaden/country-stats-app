@@ -48,7 +48,7 @@ module.exports = (_, argv) => ({
       name: "details",
       filename: "remoteEntry.js",
       remotes: {
-        shared: `shared@${process.env.SHARED_URL}/remoteEntry.js`,
+        shared: `shared@${process.env.SHARED_URL}`,
       },
       exposes: {
         "./Card": "./src/components/Card.tsx",
