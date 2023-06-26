@@ -1,7 +1,4 @@
-import {
-  GlobalContextProps,
-  Theme,
-} from "shared/GlobalContextProvider";
+import { GlobalContextProps, Theme } from "shared/GlobalContextProvider";
 
 export const loadStateFromStorage = (): GlobalContextProps => {
   const dataString = sessionStorage.getItem("context");
@@ -12,7 +9,7 @@ export const loadStateFromStorage = (): GlobalContextProps => {
   return null;
 };
 
-export const loadThemeFromStorage = (defaultTheme:Theme): Theme => {
+export const loadThemeFromStorage = (defaultTheme: Theme): Theme => {
   const dataString = sessionStorage.getItem("theme");
 
   if (dataString) {
@@ -23,4 +20,20 @@ export const loadThemeFromStorage = (defaultTheme:Theme): Theme => {
       return defaultTheme;
     }
   }
+};
+
+export const loadCountryNamesFromStorage = (
+  defaultNames: string[]
+): string[] => {
+  const dataString = sessionStorage.getItem("context");
+
+  if (dataString) {
+    try {
+      const storedContext = JSON.parse(dataString);
+      return storedContext.countryNames;
+    } catch (error) {
+      return defaultNames;
+    }
+  }
+  return defaultNames;
 };

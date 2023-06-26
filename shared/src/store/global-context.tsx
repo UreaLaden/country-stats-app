@@ -47,7 +47,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   );
 
   React.useEffect(() => {
-    console.log(Themes);
     setThemes(Themes);
   },[])
 
@@ -61,7 +60,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   };
   
   const saveThemeToStorage = (theme: Theme) => {
-    console.log("Theme to be set in storage: ", theme.name);
     const dataString = JSON.stringify(theme);
     sessionStorage.setItem("theme", dataString);
   };
@@ -88,8 +86,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   }, [countries]);
 
   const setThemeHandler = (theme: Theme) => {
-    console.log(`Theme should change to: ${theme.name}`);
-
     saveThemeToStorage(theme);
     setActiveTheme(theme);
   };

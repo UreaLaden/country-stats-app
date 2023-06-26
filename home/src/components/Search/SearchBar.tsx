@@ -15,20 +15,16 @@ import {
 } from "shared/GlobalContextProvider";
 import { Country } from "shared/CountryTypes";
 import { Trie } from "../../utils/TrieSearch";
-import { loadThemeFromStorage } from "../../utils/helpers";
+import { loadCountryNamesFromStorage, loadThemeFromStorage } from "../../utils/helpers";
 
 export const SearchBar = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
   const [theme, setTheme] = React.useState<Theme>(loadThemeFromStorage(context.theme));
-  const [trie, setTrie] = React.useState<Trie>();
+  const [trie, setTrie] = React.useState<Trie>(new Trie());
   const [enableError, setEnableError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    setTrie(new Trie());
-  }, [context.currentCountry]);
-
-  React.useEffect(() => {
-    trie?.compileNodes(context.countryNames);
+    trie.compileNodes(loadCountryNamesFromStorage(context.countryNames));
   }, [context.countryNames]);
 
   React.useEffect(() => {
