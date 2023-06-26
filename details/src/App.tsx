@@ -6,13 +6,16 @@ import {GlobalContextProvider,GlobalContext} from "shared/GlobalContextProvider"
 
 const App = () => (  
   <GlobalContextProvider>
-    <div>
+    <div >
       <Card
         name={"Bahamas"}
         population ={393248}
         flag={"https://flagcdn.com/bs.svg"}
         region ={"Americas"}
         capital={"Nassau"}
+        onCardClicked={(_event) => {
+          _event.stopPropagation();
+        }}
       />
     </div>
   </GlobalContextProvider>

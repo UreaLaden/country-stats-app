@@ -5,13 +5,16 @@ import Card from "details/Card";
 import {
   GlobalContext,
   GlobalContextProps,
+  Theme
 } from "shared/GlobalContextProvider";
 import { Country } from "shared/CountryTypes";
 import { SearchBar } from "../Search/SearchBar";
+import { loadThemeFromStorage } from "../../utils/helpers";
 
 export const Content = () => {
   const [countries, setCountries] = React.useState<Country[]>();
   const context = React.useContext<GlobalContextProps>(GlobalContext);
+  const [theme,setTheme] = React.useState<Theme>(loadThemeFromStorage(context.theme))
 
   React.useEffect(() => {
     context.populateCountries("all", false);
@@ -20,7 +23,9 @@ export const Content = () => {
         ? context.filteredCountries
         : context.countries
     );
+    context.setState({...context});
   }, [context.currentCountry, context.filteredCountries]);
+
 
   return (
     <>
@@ -35,11 +40,10 @@ export const Content = () => {
               flag={value.flag.svg}
               region={value.region}
               capital={value.capital}
-              theme={context.theme}
+              theme={theme}
               onCardClicked={() => {
-                context.fetchCountry(value.name.common);
-                const newState = {...context,currentCountry:value}
-                context.setState(newState);
+                console.log("Fetching Country: ",value?.name?.common);
+                context.setCurrentCountry(value);
               }}
             />
           );

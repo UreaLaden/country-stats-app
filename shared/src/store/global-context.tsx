@@ -16,6 +16,7 @@ export const GlobalContext = React.createContext<GlobalContextProps>({
   countries: [],
   currentCountry: undefined,
   theme: Themes.LIGHT,
+  allThemes:Themes,
   regions: [],
   countryNames: [],
   filteredCountries: [],
@@ -38,16 +39,31 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   const [currentCountry, setCurrentCountry] = React.useState<
     Country | undefined
   >(undefined);
+  const [themes,setThemes] = React.useState<Record<string,Theme>>(Themes);
   const [theme, setActiveTheme] = React.useState<Theme>(Themes.LIGHT);
   const [countryNames, setCountryNames] = React.useState<string[]>([]);
   const [filteredCountries, setFilteredCountries] = React.useState<Country[]>(
     []
   );
 
+  React.useEffect(() => {
+    console.log(Themes);
+    setThemes(Themes);
+  },[])
+
+  React.useEffect(() => {
+    saveThemeToStorage({...theme});
+  }, [theme.name]);
+  
   const saveStateToStorage = (state: GlobalContextProps) => {
     const dataString = JSON.stringify(state);
-
     sessionStorage.setItem("context", dataString);
+  };
+  
+  const saveThemeToStorage = (theme: Theme) => {
+    console.log("Theme to be set in storage: ", theme.name);
+    const dataString = JSON.stringify(theme);
+    sessionStorage.setItem("theme", dataString);
   };
 
   const updateStateHandler = (newState: GlobalContextProps) => {
@@ -58,7 +74,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     const country = await countryApiClient.getCountryByName(name);
     if (!isApiError(country)) {
       setCurrentCountry(country);
-      updateStateHandler({...context});
+      updateStateHandler({ ...context });
     }
   };
 
@@ -71,9 +87,11 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     }
   }, [countries]);
 
-  const setThemeHandler = (themeName: ThemeName) => {
-    setActiveTheme(Themes[themeName] as Theme);
-    updateStateHandler({ ...context });
+  const setThemeHandler = (theme: Theme) => {
+    console.log(`Theme should change to: ${theme.name}`);
+
+    saveThemeToStorage(theme);
+    setActiveTheme(theme);
   };
 
   const delay = (ms: number) => {
@@ -134,6 +152,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     countries: countries,
     currentCountry: currentCountry,
     theme: theme,
+    allThemes:themes,
     regions: regions,
     countryNames: countryNames,
     filteredCountries: filteredCountries,
@@ -145,7 +164,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     setTheme: setThemeHandler,
     populateCountries: setCountriesHandler,
     setCurrentCountry: setCurrentCountryHandler,
-    fetchCountry:fetchCountryHandler
+    fetchCountry: fetchCountryHandler,
   };
 
   return (

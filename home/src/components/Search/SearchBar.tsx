@@ -11,23 +11,29 @@ import { ThemeNames } from "../../utils/constants";
 import {
   GlobalContext,
   GlobalContextProps,
+  Theme,
 } from "shared/GlobalContextProvider";
 import { Country } from "shared/CountryTypes";
 import { Trie } from "../../utils/TrieSearch";
+import { loadThemeFromStorage } from "../../utils/helpers";
 
 export const SearchBar = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
+  const [theme, setTheme] = React.useState<Theme>(loadThemeFromStorage(context.theme));
   const [trie, setTrie] = React.useState<Trie>();
-  const [searchCountries, setSearchCountries] = React.useState();
   const [enableError, setEnableError] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     setTrie(new Trie());
-  }, []);
+  }, [context.currentCountry]);
 
   React.useEffect(() => {
     trie?.compileNodes(context.countryNames);
   }, [context.countryNames]);
+
+  React.useEffect(() => {
+    setTheme(loadThemeFromStorage(context.theme));
+  },[context.theme])
 
   const SearchInputHandler = (newValue: string) => {
     if (trie?.search(newValue)) {
@@ -60,20 +66,20 @@ export const SearchBar = () => {
   };
 
   const searchBoxClass = React.useMemo(() => {
-    return context.theme.name === ThemeNames.Light
+    return theme.name === ThemeNames.Light
       ? searchBoxStylesLight
       : searchBoxStylesDark;
-  }, [context.theme]);
+  }, [theme]);
 
   const dropDownOptions = context.regions.map((region: string) => {
     return { key: region, text: region };
   });
 
   const regionFilterClass = React.useMemo(() => {
-    return context.theme.name === ThemeNames.Light
+    return theme.name === ThemeNames.Light
       ? regionFilterStylesLight
       : regionFilterStylesDark;
-  }, [context.theme]);
+  }, [theme]);
 
   return (
     <div className={styles.searchContainer}>

@@ -40,7 +40,6 @@ export const StyledCategorySpan = styled.span`
 
 export const StyledCardDetailsContainer = styled.div`
   padding: 0 10% 0 10%;
- 
 `;
 
 export const StyledImage = styled.div<StyledImageProps>`

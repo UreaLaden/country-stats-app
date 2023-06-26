@@ -37,6 +37,7 @@ export interface GlobalContextProps {
   countries: Country[];
   currentCountry?: Country;
   theme: Theme;
+  allThemes:Record<string,Theme>;
   regions: string[];
   countryNames: string[];
   filteredCountries: Country[];
@@ -44,7 +45,7 @@ export interface GlobalContextProps {
   getState:() => GlobalContextProps | null;
   delay: (timeout:number) => void;
   setFilteredCountries: (countries: Country[]) => void;
-  setTheme: (themeName: ThemeName) => void;
+  setTheme: (theme: Theme) => void;
   populateCountries: (region: string, byRegion: boolean) => void;
   setCurrentCountry: (country?: Country) => void;
   findCountryByName: (name: string) => void;
