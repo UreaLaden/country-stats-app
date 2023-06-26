@@ -11,7 +11,8 @@ export const styles = mergeStyleSets({
     flexBasis: "100%",
     justifyContent: "space-between",
     padding:"5% 5%",
-    position:'relative'
+    position:'relative',
+    marginTop:'10%'
   },
   errorContainer:{
     position:'absolute',

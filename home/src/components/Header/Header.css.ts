@@ -3,7 +3,10 @@ import styled from "styled-components";
 
 export const StyledHeader = styled.div`
     display:flex;
-    height:20%;
+    height:6vh;
+    width:100vw;
+    z-index:1000;
+    position:fixed;
     border-radius:4px;
     background-color: ${(props) => props.theme.background_secondary};
     color: ${(props) => props.theme.foreground}
