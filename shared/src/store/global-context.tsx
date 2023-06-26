@@ -136,7 +136,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   };
 
   const setCurrentCountryHandler = (country?: Country) => {
-    console.log("Updating country to: ", country?.name);
     if (country) {
       setCurrentCountry(country);
     } else {

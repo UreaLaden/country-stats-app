@@ -15,11 +15,16 @@ import {
 } from "shared/GlobalContextProvider";
 import { Country } from "shared/CountryTypes";
 import { Trie } from "../../utils/TrieSearch";
-import { loadCountryNamesFromStorage, loadThemeFromStorage } from "../../utils/helpers";
+import {
+  loadCountryNamesFromStorage,
+  loadThemeFromStorage,
+} from "../../utils/helpers";
 
 export const SearchBar = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
-  const [theme, setTheme] = React.useState<Theme>(loadThemeFromStorage(context.theme));
+  const [theme, setTheme] = React.useState<Theme>(
+    loadThemeFromStorage(context.theme)
+  );
   const [trie, setTrie] = React.useState<Trie>(new Trie());
   const [enableError, setEnableError] = React.useState<boolean>(false);
 
@@ -28,8 +33,8 @@ export const SearchBar = () => {
   }, [context.countryNames]);
 
   React.useEffect(() => {
-    setTheme(loadThemeFromStorage(context.theme));
-  },[context.theme])
+    setTheme((prevTheme: Theme) => loadThemeFromStorage(context.theme));
+  }, [context.theme]);
 
   const SearchInputHandler = (newValue: string) => {
     if (trie?.search(newValue)) {
