@@ -42,7 +42,7 @@ module.exports = (_, argv) => ({
   plugins: [
     new Dotenv({
       path:
-        process.env.NODE_ENV === "production"
+        process.env.NODE_ENV === "Production"
           ? ".env.production"
           : ".env.development",
     }),
