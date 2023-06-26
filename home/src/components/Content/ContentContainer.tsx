@@ -42,7 +42,6 @@ export const Content = () => {
               capital={value.capital}
               theme={theme}
               onCardClicked={() => {
-                console.log("Fetching Country: ",value?.name?.common);
                 context.setCurrentCountry(value);
               }}
             />

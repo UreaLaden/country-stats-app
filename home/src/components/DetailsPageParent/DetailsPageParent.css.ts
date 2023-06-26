@@ -60,8 +60,9 @@ export const styles = mergeStyleSets({
     contentBorderContainer:{
         flex:1,
         display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-around'
+        flexFlow:"row wrap",
+        columnGap:"8px",
+        marginLeft:"8px"
     },
     contentBorder:{
         display:'flex',
