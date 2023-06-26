@@ -51,7 +51,7 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {
         details: `details@${process.env.DETAILS_URL}/remoteEntry.js`,
-        shared: `shared@${process.env.DAHRED_URL}/remoteEntry.js`,
+        shared: `shared@${process.env.SHARED_URL}/remoteEntry.js`,
       },
       exposes: {},
       shared: {
