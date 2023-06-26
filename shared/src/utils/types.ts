@@ -49,6 +49,7 @@ export interface GlobalContextProps {
   populateCountries: (region: string, byRegion: boolean) => void;
   setCurrentCountry: (country?: Country) => void;
   findCountryByName: (name: string) => void;
+  getCountryByName: (name:string) => Country | undefined;
   fetchCountry: (countryName:string) => void;
 }
 

@@ -25,10 +25,10 @@ export const styles = mergeStyleSets({
         height:'100%',
         gridArea:'3 / 2 / 9 / -2',
         backgroundSize:'cover',
-        backgroundColor:'purple',
         backgroundRepeat:'no-repeat',
         backgroundPosition:'center',
-        borderRadius:'10px'
+        borderRadius:'10px',
+        boxShadow:'0 0 2px 2px rgba(0,0,0,0.1)'
     },
     innerDetailsContainer:{
         gridArea:'1 / 6 / 7 / -1',
@@ -37,19 +37,35 @@ export const styles = mergeStyleSets({
         'grid-template-columns': 'repeat(7,1fr)'
     },
     detailsHeader:{
-        backgroundColor:'red',
+        display:'flex',
+        alignItems:'end',
+        fontWeight:'700',
+        fontSize:'2rem',
         gridArea:'2 / 1 / span 1 / -1'
     },
     contentPrimary:{
-        backgroundColor:'magenta',
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-around',
+        padding:"5% 0 20% 0",
         gridArea:'3 / 1 / 6 / 5'
     },
     contentSecondary:{
-        backgroundColor:'orange',
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'space-around',
+        padding:"10% 0 70% 0",
         gridArea:'3 / 5 / 6 / -1'
     },
+    contentBorderContainer:{
+        flex:1,
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-around'
+    },
     contentBorder:{
-        backgroundColor:'salmon',
+        display:'flex',
+        flexDirection:'row',
         gridArea:'6 / 1 / span 1 / -1',
         fontWeight:'bold'
     },
@@ -59,10 +75,11 @@ export const styles = mergeStyleSets({
         'text-decoration':'none'
     },
     subHeader:{
-        fontWeight:'bold'
+        fontWeight:'700'
     },
     subContent:{
-        fontWeight:'normal'
+        fontWeight:'100',
+        color: 'rgba(inherit,inherit,inherit,0.8)'
     },
     backgroundLight:{
         background:"#FFF",

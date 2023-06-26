@@ -49,7 +49,6 @@ const Card = (props: CountryCardProps) => {
 
   const handleClick = (event: any) => {
     props.onCardClicked(event);
-    console.log(`Clicked ${props.name} Card`);
     context.setState({ ...currentState });
     navigate("/details");
   };

@@ -30,7 +30,7 @@ export const SearchBar = () => {
 
   React.useEffect(() => {
     trie.compileNodes(loadCountryNamesFromStorage(context.countryNames));
-  }, [context.countryNames]);
+  }, [context]);
 
   React.useEffect(() => {
     setTheme((prevTheme: Theme) => loadThemeFromStorage(context.theme));

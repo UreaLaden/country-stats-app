@@ -2,27 +2,36 @@ import * as React from "react";
 import {
   GlobalContext,
   GlobalContextProps,
+  Theme,
 } from "shared/GlobalContextProvider";
 import Header from "../Header/Header";
 import { classNames } from "../../utils/constants";
 import { AppContainer } from "../AppParent/App.css";
 import { DetailsContainer, styles } from "./DetailsPageParent.css";
 import { Link } from "react-router-dom";
-import { Country, Theme } from "shared/CountryTypes";
-import { loadStateFromStorage } from "../../utils/helpers";
+import { Country } from "shared/CountryTypes";
+import {
+  loadStateFromStorage,
+  loadThemeFromStorage,
+} from "../../utils/helpers";
+import { BorderButton } from "../BorderButton/BorderButton";
 
 export const DetailsContainerParent = () => {
   const context = React.useContext<GlobalContextProps>(GlobalContext);
-  const [state, setState] = React.useState<GlobalContextProps>(loadStateFromStorage());
+  const [state, setState] = React.useState<GlobalContextProps>(
+    loadStateFromStorage()
+  );
   const [country, setCountry] = React.useState<Country>(state?.currentCountry);
 
+  
   React.useEffect(() => {
     setCountry(state?.currentCountry);
   }, [state?.currentCountry]);
 
+ 
+
   const currency = React.useMemo(() => {
     if (!country) return;
-    console.log(country);
     const key = Object.keys(country?.currencies); //Why is this not working.......
     const currencies = key.map((value) => {
       return country.currencies[value]?.name;
@@ -52,16 +61,14 @@ export const DetailsContainerParent = () => {
   }, [country?.flag?.svg]);
 
   const handleBorderCountryClick = (_event: any) => {
-    console.log("Clicked: ", _event.target.value);
+    const country = context.getCountryByName(_event.target.innerText);
+    setCountry(country);
   };
 
-  const theme = React.useMemo(() => context.theme,[context?.theme])
+  const theme = React.useMemo(() => context.theme, [context?.theme]);
 
   return (
-    <AppContainer
-      theme={theme}
-      className={classNames.AppContainerParent}
-    >
+    <AppContainer theme={theme} className={classNames.AppContainerParent}>
       <Header />
       <DetailsContainer className={"details-container"}>
         <div
@@ -130,13 +137,18 @@ export const DetailsContainerParent = () => {
               </div>
               <div className={styles.contentBorder}>
                 Border Countries:{" "}
-                {borders?.map((value: string, idx: number) => {
-                  return (
-                    <button key={idx} onClick={handleBorderCountryClick}>
-                      {value}
-                    </button>
-                  );
-                })}
+                <div className={styles.contentBorderContainer}>
+                  {borders?.map((value: string, idx: number) => {
+                    return (
+                      <BorderButton
+                        text={value}
+                        key={idx}
+                        themeName={theme.name}
+                        onClick={handleBorderCountryClick}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

@@ -28,6 +28,7 @@ export const GlobalContext = React.createContext<GlobalContextProps>({
   populateCountries: () => {},
   setCurrentCountry: () => {},
   findCountryByName: () => {},
+  getCountryByName:() => undefined,
   fetchCountry: () => {},
 });
 
@@ -45,6 +46,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
   const [filteredCountries, setFilteredCountries] = React.useState<Country[]>(
     []
   );
+  const [countryIndex,setCountryIndex] = React.useState<Record<string,Country>>({})
 
   React.useEffect(() => {
     setThemes(Themes);
@@ -82,6 +84,12 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
       setRegionsHandler();
       setCountryNamesHandler();
       updateStateHandler({ ...context });
+      
+      const index: Record<string,Country> = {};
+      countries.forEach((country) => {
+        index[country.name.common] = country;
+      });
+      setCountryIndex(index);
     }
   }, [countries]);
 
@@ -142,6 +150,9 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
       setCurrentCountry(countries[0]);
     }
   };
+  const getCountryByNameHandler = (name:string):Country | undefined => {
+    return countryIndex[name];
+  }
 
   const context: GlobalContextProps = {
     countries: countries,
@@ -156,6 +167,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
     delay: delay,
     setFilteredCountries: setFilteredCountriesHandler,
     findCountryByName: findCountryByName,
+    getCountryByName:getCountryByNameHandler,
     setTheme: setThemeHandler,
     populateCountries: setCountriesHandler,
     setCurrentCountry: setCurrentCountryHandler,
