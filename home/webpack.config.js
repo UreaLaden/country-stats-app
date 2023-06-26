@@ -1,6 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-
+const Dotenv = require("dotenv-webpack");
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
@@ -40,12 +40,18 @@ module.exports = (_, argv) => ({
   },
 
   plugins: [
+    new Dotenv({
+      path:
+        process.env.NODE_ENV === "production"
+          ? ".env.production"
+          : ".env.development",
+    }),
     new ModuleFederationPlugin({
       name: "home",
       filename: "remoteEntry.js",
       remotes: {
-        details: "details@http://localhost:9001/remoteEntry.js",
-        shared: "shared@http://localhost:3000/remoteEntry.js",
+        details: `details@${process.env.DETAILS_URL}/remoteEntry.js`,
+        shared: `shared@${process.env.DAHRED_URL}/remoteEntry.js`,
       },
       exposes: {},
       shared: {
@@ -58,20 +64,21 @@ module.exports = (_, argv) => ({
           singleton: true,
           requiredVersion: deps["react-dom"],
         },
-        "styled-components":{
-          singleton:true,
-          requiredVersion:deps["styled-components"]
+        "styled-components": {
+          singleton: true,
+          requiredVersion: deps["styled-components"],
         },
-        "react-router-dom":{
-          singleton:true,
-          requiredVersion:deps["react-router-dom"]
+        "react-router-dom": {
+          singleton: true,
+          requiredVersion: deps["react-router-dom"],
         },
-        "pako":{
-          singleton:true,
-          requiredVersion:deps["pako"]
-        }
+        pako: {
+          singleton: true,
+          requiredVersion: deps["pako"],
+        },
       },
     }),
+
     new HtmlWebPackPlugin({
       template: "./src/index.html",
     }),
