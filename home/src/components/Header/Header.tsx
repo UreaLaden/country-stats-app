@@ -41,13 +41,13 @@ export const Header = () => {
 
   const formattedThemeName: string = React.useMemo(
     () =>
-      theme.name.charAt(0).toUpperCase() + theme.name.slice(1).toLowerCase(),
-    [theme.name]
+      theme?.name.charAt(0).toUpperCase() + theme?.name.slice(1).toLowerCase(),
+    [theme?.name]
   );
 
   const iconClass = React.useMemo(() => {
-    return theme.name === ThemeNames.Light ? styles.iconLight : styles.iconDark;
-  }, [theme.name]);
+    return theme?.name === ThemeNames.Light ? styles.iconLight : styles.iconDark;
+  }, [theme?.name]);
 
   return (
     <StyledHeader className={classNames.HeaderContainer} theme={theme}>
