@@ -77,7 +77,7 @@ export const SearchBar = () => {
   });
 
   const regionFilterClass = React.useMemo(() => {
-    return theme.name === ThemeNames.Light
+    return theme?.name === ThemeNames.Light
       ? regionFilterStylesLight
       : regionFilterStylesDark;
   }, [theme]);
