@@ -67,7 +67,7 @@ export const SearchBar = () => {
   };
 
   const searchBoxClass = React.useMemo(() => {
-    return theme.name === ThemeNames.Light
+    return theme?.name === ThemeNames.Light
       ? searchBoxStylesLight
       : searchBoxStylesDark;
   }, [theme]);
