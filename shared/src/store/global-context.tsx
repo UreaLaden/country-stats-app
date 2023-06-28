@@ -54,7 +54,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = (
 
   React.useEffect(() => {
     saveThemeToStorage({...theme});
-  }, [theme.name]);
+  }, [theme?.name]);
   
   const saveStateToStorage = (state: GlobalContextProps) => {
     const dataString = JSON.stringify(state);

@@ -10,12 +10,13 @@ import {
 } from "shared/GlobalContextProvider";
 import { SearchBar } from "../Search/SearchBar";
 import { Link } from "react-router-dom";
-import { loadThemeFromStorage } from "../../utils/helpers";
+import { DEFAULT_THEME, loadThemeFromStorage } from "../../utils/helpers";
 
 export const Header = () => {
+
   const context = React.useContext<GlobalContextProps>(GlobalContext);
   const [stateTheme, setStateTheme] = React.useState<Theme>(
-    loadThemeFromStorage(context.theme)
+    loadThemeFromStorage(context.theme) || DEFAULT_THEME
   );
   const [themeChanged, setThemeChanged] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState<Theme>(stateTheme);

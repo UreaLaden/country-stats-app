@@ -4,7 +4,7 @@ const Dotenv = require('dotenv-webpack');
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
-    publicPath: `${process.env.PUBLIC_PATH}`,
+    publicPath: `${process.env.PUBLIC_PATH ?? "http://localhost:3000/"}`,
   },
 
   resolve: {

@@ -8,17 +8,20 @@ export const StyledContainer = styled.div`
     min-height:100vh;
     height:auto;
     width:100%;
-    padding:0 5%;
+    padding:0 25%;
+    margin:auto;
 
     @media (max-width:900px){
         grid-template-columns: repeat(3,1fr)
     }
     
-    @media (max-width:750px){
+    @media (max-width:1260px){
         grid-template-columns: repeat(2,1fr)
     }
 
-    @media (max-width:600px){
-        grid-template-columns: repeat(1,1fr)
+    @media (max-width:768px){
+        grid-template-columns: repeat(1,1fr);
+        grid-template-rows: auto 336px;
+        padding:0 15%;
     }
 `;

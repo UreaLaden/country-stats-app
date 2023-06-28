@@ -37,3 +37,20 @@ export const loadCountryNamesFromStorage = (
   }
   return defaultNames;
 };
+
+export const DEFAULT_THEME = {
+  name: "LIGHT",
+  foreground: "#111517",
+  background: "#F2F2F2",
+  background_secondary: "#FFFFFF",
+}
+
+export const enum Colors {
+  WHITE = "#FFFFFF",
+  WHITE_OFF = "#F2F2F2",
+  GRAY_DARK = "#2B3844",
+  GRAY_LIGHT = "#808080",
+  GRAY_STROKE = "#979797",
+  GRAY_VERYDARK = "#111517",
+  GRAY_MAINBG = "#202C36",
+}

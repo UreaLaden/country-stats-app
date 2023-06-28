@@ -2,9 +2,10 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const Dotenv = require("dotenv-webpack");
 const deps = require("./package.json").dependencies;
+
 module.exports = (_, argv) => ({
   output: {
-    publicPath: `${process.env.PUBLIC_PATH}`,
+    publicPath: `${process.env.PUBLIC_PATH ?? "http://localhost:9000/"}`,
   },
 
   resolve: {
@@ -50,8 +51,8 @@ module.exports = (_, argv) => ({
       name: "home",
       filename: "remoteEntry.js",
       remotes: {
-        details: `details@${process.env.DETAILS_URL}`,
-        shared: `shared@${process.env.SHARED_URL}`,
+        details: `details@${process.env.DETAILS_URL ?? "http://localhost:9001/remoteEntry.js"}`,
+        shared: `shared@${process.env.SHARED_URL ?? "http://localhost:3000/remoteEntry.js"}`,
       },
       exposes: {},
       shared: {

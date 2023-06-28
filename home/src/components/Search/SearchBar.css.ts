@@ -6,13 +6,22 @@ import {
 
 export const styles = mergeStyleSets({
   searchContainer: {
+    "grid-area": "1 / 1 / 2 / -1",
     width: "100%",
     display: "flex",
-    flexBasis: "100%",
+    "flex-direction": "row",
     justifyContent: "space-between",
-    padding: "5% 5%",
+    padding: "15% 0 0 0",
     position: "relative",
-    marginTop: "10%",
+    marginTop: "2rem",
+    flexWrap: "wrap",
+    selectors: {
+      "@media(max-width:768px)": {
+        "grid-area": "1 / 1 / 2 / -1",
+        "flex-direction": "column",
+        height: "100%",
+      },
+    },
   },
   errorContainer: {
     position: "absolute",
@@ -41,10 +50,15 @@ export const searchBoxStylesLight: Partial<ISearchBoxStyles> = {
     border: "none",
     width: "40%",
     height: "56px",
-    "box-shadow": " 0 0 15px rgba(0,0,0,0.1)",
+    "box-shadow": "0 0 15px rgba(0,0,0,0.1)",
     input: {
       "::placeholder": {
         color: "#2B3844",
+      },
+    },
+    selectors: {
+      "@media (max-width:768px)": {
+        width: "100%",
       },
     },
   },
@@ -69,6 +83,11 @@ export const searchBoxStylesDark: Partial<ISearchBoxStyles> = {
       },
       color: "#FFFFFF",
     },
+    selectors: {
+      "@media (max-width:768px)": {
+        width: "100%",
+      },
+    },
   },
 };
 
@@ -83,13 +102,24 @@ export const regionFilterStylesLight: Partial<IDropdownStyles> = {
   },
   root: {
     width: "20%",
+    "@media (max-width: 768px)": {
+      width: "100%",
+      panel:'2px solid green'
+    },
   },
   caretDown: {
     padding: "14px 0 0 0",
     color: "#202C36",
     transition: "color .3s ease",
   },
-  dropdownItemsWrapper: {},
+  callout:{
+    "@media(max-width:768px)":{
+      width:"100%",
+      position:'relative'
+    }
+  },
+  dropdownItemsWrapper: {
+  },
 };
 export const regionFilterStylesDark: Partial<IDropdownStyles> = {
   title: {
@@ -102,16 +132,19 @@ export const regionFilterStylesDark: Partial<IDropdownStyles> = {
     ":hover": {
       color: "#FFFFFF !important",
       backgroundColor: "#2B3844 !important",
-      border:'none'
+      border: "none",
     },
-    ":not(:focus)":{
+    ":not(:focus)": {
       color: "#FFFFFF !important",
       backgroundColor: "#2B3844 !important",
-      border:'none'
+      border: "none",
     },
   },
   root: {
     width: "20%",
+    "@media (max-width: 768px)": {
+      width: "100%",
+    },
   },
   caretDown: {
     padding: "14px 0 0 0",

@@ -73,7 +73,7 @@ export const DetailsContainerParent = () => {
       <DetailsContainer className={"details-container"}>
         <div
           className={
-            theme.name === "LIGHT"
+            theme?.name === "LIGHT"
               ? styles.backgroundLight
               : styles.backgroundDark
           }
@@ -83,7 +83,7 @@ export const DetailsContainerParent = () => {
             Back
           </Link>
         </div>
-        {country && (
+        {/*country && */(
           <div className={styles.detailsContainerWrapper}>
             <div className={styles.detailsImageContainer}>
               <div
@@ -92,38 +92,38 @@ export const DetailsContainerParent = () => {
               ></div>
             </div>
             <div className={styles.innerDetailsContainer}>
-              <div className={styles.detailsHeader}>{country.name?.common}</div>
+              <div className={styles.detailsHeader}>{country?.name?.common}</div>
               <div className={styles.contentPrimary}>
                 <div className={styles.subHeader}>
                   Native Name:{" "}
                   <span className={styles.subContent}>
-                    {country.name?.common}
+                    {country?.name?.common}
                   </span>
                 </div>
                 <div className={styles.subHeader}>
                   Population:{" "}
                   <span className={styles.subContent}>
-                    {country.population}
+                    {country?.population}
                   </span>
                 </div>
                 <div className={styles.subHeader}>
                   Region:{" "}
-                  <span className={styles.subContent}>{country.region}</span>
+                  <span className={styles.subContent}>{country?.region}</span>
                 </div>
                 <div className={styles.subHeader}>
                   Sub Region:{" "}
-                  <span className={styles.subContent}>{country.subregion}</span>
+                  <span className={styles.subContent}>{country?.subregion}</span>
                 </div>
                 <div className={styles.subHeader}>
                   Capital:{" "}
-                  <span className={styles.subContent}>{country.capital}</span>
+                  <span className={styles.subContent}>{country?.capital}</span>
                 </div>
               </div>
               <div className={styles.contentSecondary}>
                 <div className={styles.subHeader}>
                   Top Level Domain:{" "}
                   <span className={styles.subContent}>
-                    {country.topLevelDomain}
+                    {country?.topLevelDomain}
                   </span>
                 </div>
                 <div className={styles.subHeader}>
@@ -143,7 +143,7 @@ export const DetailsContainerParent = () => {
                       <BorderButton
                         text={value}
                         key={idx}
-                        themeName={theme.name}
+                        themeName={theme?.name}
                         onClick={handleBorderCountryClick}
                       />
                     );
